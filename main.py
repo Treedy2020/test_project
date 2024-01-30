@@ -2,6 +2,7 @@ import os
 import json
 import time
 import argparse
+import torch
  
 from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer
