@@ -34,7 +34,7 @@ def main(batch_size: int = 512, batch_time: float = 0.1, model_name:str='thenlpe
     start_t, last_batch_t= time.time(), time.time()
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = SentenceTransformer(model_name)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:0")
     model.to(device)
     print('Model load completed, start to do inference...')
     print(f'MODEL NAME: {model_name}, BATCH_SIZE: {batch_size}')
@@ -46,6 +46,7 @@ def main(batch_size: int = 512, batch_time: float = 0.1, model_name:str='thenlpe
         if not ind%batch_size:
             batch_count += 1
             model.encode(curr_batch)
+            print(device)
             print('Curr Batch: %s\tCurr Batch time: %.4fs\tTotal Time Use: %.4fs'%(batch_count, time.time() - last_batch_t, time.time() - start_t))
             last_batch_t = time.time()
             curr_batch = []
