@@ -34,8 +34,11 @@ def main(batch_size: int = 512, batch_time: float = 0.1, model_name:str='thenlpe
     start_t, last_batch_t= time.time(), time.time()
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = SentenceTransformer(model_name)
-    device = torch.device("cuda:0")
-    model.to(device)
+
+    if torch.cuda.is_available():
+        model = model.cuda()
+        model = nn.DataParallel(model)
+
     print('Model load completed, start to do inference...')
     print(f'MODEL NAME: {model_name}, BATCH_SIZE: {batch_size}')
     curr_batch = []
