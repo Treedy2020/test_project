@@ -37,7 +37,7 @@ def main(batch_size: int = 512, batch_time: float = 0.1, model_name:str='thenlpe
 
     if torch.cuda.is_available():
         model = model.cuda()
-        model = nn.DataParallel(model)
+        model = torch.nn.DataParallel(model)
 
     print('Model load completed, start to do inference...')
     print(f'MODEL NAME: {model_name}, BATCH_SIZE: {batch_size}')
